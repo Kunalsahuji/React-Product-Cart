@@ -9,6 +9,10 @@ const Product = () => {
         try {
             const { data } = await axios.get('/products');
             setProducts(data);
+            let red = data.reduce((previousValue, currentValue) => {
+                return [...previousValue, currentValue]
+            }, []);
+            console.log("red", red)
             console.log("Product data: ", data);
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -18,7 +22,7 @@ const Product = () => {
     const handleToggle = () => {
         setToggle(!toggle);
         if (!toggle) {
-            getProduct(); 
+            getProduct();
         }
     };
 
@@ -43,9 +47,11 @@ const Product = () => {
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {products.length > 0 ? (
                         products.map((product) => (
-                            <div
+
+                            < div
                                 key={product.id}
                                 className="bg-gray-100 p-4 rounded shadow-md"
+
                             >
                                 <h2 className="text-xl font-bold">{product.title}</h2>
                                 <p className="text-gray-600">Price: ${product.price}</p>
@@ -61,8 +67,9 @@ const Product = () => {
                         <p>{products.length === 0 ? "No products found." : "Loading products..."}</p>
                     )}
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };
 
